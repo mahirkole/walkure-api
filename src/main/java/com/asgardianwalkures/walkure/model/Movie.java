@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by Burak Köken on 22.7.2019.
  */
-@Entity(name = "Movie")
+//@Entity(name = "Movie")
 public class Movie {
 
     @Id
