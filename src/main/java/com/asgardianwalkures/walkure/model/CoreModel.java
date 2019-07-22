@@ -1,7 +1,11 @@
 package com.asgardianwalkures.walkure.model;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -9,9 +13,38 @@ import java.util.UUID;
 public abstract class CoreModel {
 
     private UUID uuid;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-    private Timestamp deletedAt;
+
+    @CreatedDate
+    @Column(name = "createdDate")
+    private Date createdDate;
+
+    @LastModifiedDate
+    @Column(name = "lastModifiedDate")
+    private Date lastModifiedDate;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
     @Override
     public boolean equals(Object o) {

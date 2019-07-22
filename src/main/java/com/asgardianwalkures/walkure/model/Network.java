@@ -3,6 +3,7 @@ package com.asgardianwalkures.walkure.model;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 public class Network extends CoreModel {
 
     @Id
+    @Column(name = "networkId")
     private Long id;
     private String name;
     private String county;
