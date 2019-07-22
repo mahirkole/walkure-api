@@ -2,9 +2,7 @@ package com.asgardianwalkures.walkure.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity(name = "Crew")
@@ -13,6 +11,8 @@ public class Crew extends CoreModel {
 
     @Id
     private Long id;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private Person person;
     private String department;
     private Integer job;
