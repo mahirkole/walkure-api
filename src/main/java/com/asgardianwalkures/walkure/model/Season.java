@@ -1,5 +1,6 @@
 package com.asgardianwalkures.walkure.model;
 
+import com.asgardianwalkures.walkure.ImageIdConverter;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,19 +16,24 @@ public class Season extends CoreModel {
     @Column(name = "seasonId")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tvshow_id")
+    private TVShow tvShow;
+
     @Column(name = "seasonName")
     private String name;
 
     @Column(name = "seasonNo")
     private Integer seasonNo;
 
+    @Convert(converter = ImageIdConverter.class)
+    private Image poster;
+
     @Column(name = "seasonTvShowId")
     private Long tvShowId;
 
     @Column(name = "seasonOverview")
     private String overview;
-
-    private Image poster;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "seasonAirDate")

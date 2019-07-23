@@ -1,5 +1,6 @@
 package com.asgardianwalkures.walkure.model;
 
+import com.asgardianwalkures.walkure.ImageIdConverter;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -19,6 +20,24 @@ public class TVShow extends CoreModel {
     @Column(name = "tvShowName")
     private String name;
 
+    private Person creator;
+  
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "genre_id")
+    private List<Genre> genreList;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "network_id")
+    private List<Network> networkList;
+    
+    private Date firstAirDate;
+    
+    @OneToMany(mappedBy = "Season", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Season> seasonList;
+    
+    @OneToMany(mappedBy = "Episode", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Episode> episodeList;
+
     @Column(name = "tvShowFirstAirDate")
     private Date firstAirDate;
 
@@ -31,11 +50,14 @@ public class TVShow extends CoreModel {
     @Lob
     @Column(name = "tvShowOverview")
     private String overview;
-
-    private Person creator;
-
+  
+    @Convert(converter = ImageIdConverter.class)
     private Image poster;
-
+  
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "company_id")
+    private List<Company> companyList;
+  
     @URL
     @Column(name = "tvShowHomePageUrl")
     private String homepage;

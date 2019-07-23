@@ -20,7 +20,8 @@ public class Episode extends CoreModel {
     @ManyToOne
     private Season season;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tvshow_id")
     private TVShow tvShow;
 
     private List<Crew> crewList;
