@@ -13,7 +13,7 @@ import java.util.List;
 public class Company extends CoreModel {
 
     @Id
-    @Column(name = "companyId")
+    @Column(name = "company_id")
     private Long id;
 
     @Column(name = "companyName")
@@ -24,7 +24,6 @@ public class Company extends CoreModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_company_id")
-    @Column(name = "companyParent")
     private Company parentCompany;
   
     @OneToMany(mappedBy = "parentCompany", cascade = CascadeType.ALL, orphanRemoval = true)

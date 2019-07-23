@@ -10,11 +10,10 @@ import javax.persistence.*;
 public class Cast extends CoreModel {
 
     @Id
-    @Column(name = "castId")
+    @Column(name = "cast_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
     private Person person;
 
     @Column(name = "castCharacter")

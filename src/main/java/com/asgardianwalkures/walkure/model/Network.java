@@ -14,11 +14,16 @@ import javax.persistence.Table;
 public class Network extends CoreModel {
 
     @Id
-    @Column(name = "networkId")
+    @Column(name = "network_id")
     private Long id;
+
+    @Column(name = "network_name")
     private String name;
+
     private String county;
+
     @URL
     private String homepage;
+
     private String hqAddress;
 }

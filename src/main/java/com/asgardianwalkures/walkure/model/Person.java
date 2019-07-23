@@ -1,5 +1,6 @@
 package com.asgardianwalkures.walkure.model;
 
+import com.asgardianwalkures.walkure.ImageIdConverter;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -36,6 +37,8 @@ public class Person extends CoreModel {
     @Column(name = "personHomePageUrl")
     private String homepage;
 
+    @Convert(converter = ImageIdConverter.class)
+    @Column(name = "personImage")
     private Image image;
 
 }

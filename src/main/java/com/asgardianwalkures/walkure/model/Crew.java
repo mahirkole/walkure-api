@@ -10,11 +10,10 @@ import javax.persistence.*;
 public class Crew extends CoreModel {
 
     @Id
-    @Column(name = "crewId")
+    @Column(name = "crew_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
     private Person person;
 
     @Column(name = "crewDepartment")

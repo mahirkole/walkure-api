@@ -20,6 +20,8 @@ public class TVShow extends CoreModel {
     @Column(name = "tvShowName")
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id")
     private Person creator;
   
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -29,13 +31,11 @@ public class TVShow extends CoreModel {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "network_id")
     private List<Network> networkList;
-    
-    private Date firstAirDate;
-    
-    @OneToMany(mappedBy = "Season", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Season> seasonList;
     
-    @OneToMany(mappedBy = "Episode", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Episode> episodeList;
 
     @Column(name = "tvShowFirstAirDate")
@@ -52,6 +52,7 @@ public class TVShow extends CoreModel {
     private String overview;
   
     @Convert(converter = ImageIdConverter.class)
+    @Column(name = "tvShowPoster")
     private Image poster;
   
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -61,17 +62,4 @@ public class TVShow extends CoreModel {
     @URL
     @Column(name = "tvShowHomePageUrl")
     private String homepage;
-
-    @ManyToMany
-    private List<Genre> genreList;
-
-    @OneToMany(mappedBy = "tvShow")
-    private List<Season> seasonList;
-
-    @OneToMany(mappedBy = "tvShow")
-    private List<Episode> episodeList;
-
-    private List<Company> companyList;
-
-    private List<Network> networkList;
 }

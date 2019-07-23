@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity(name = "Episode")
@@ -24,7 +25,18 @@ public class Episode extends CoreModel {
     @JoinColumn(name = "tvshow_id")
     private TVShow tvShow;
 
-    private List<Crew> crewList;
-    private List<Cast> castList;
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "episode_crew")
+    private Set<Crew> crewList;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "episode_cast")
+    private Set<Cast> castList;
 
 }

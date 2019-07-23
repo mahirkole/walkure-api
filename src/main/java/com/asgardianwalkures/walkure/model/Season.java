@@ -27,6 +27,7 @@ public class Season extends CoreModel {
     private Integer seasonNo;
 
     @Convert(converter = ImageIdConverter.class)
+    @Column(name = "seasonPoster")
     private Image poster;
 
     @Column(name = "seasonTvShowId")
@@ -38,9 +39,6 @@ public class Season extends CoreModel {
     @Temporal(TemporalType.DATE)
     @Column(name = "seasonAirDate")
     private Date airDate;
-
-    @ManyToOne
-    private TVShow tvShow;
 
     @OneToMany(mappedBy = "season")
     private List<Episode> episodeList;

@@ -11,7 +11,7 @@ import java.util.List;
 public class Genre {
 
     @Id
-    @Column(name = "genreId")
+    @Column(name = "genre_id")
     private Long id;
 
     @Column(name = "genreName")
