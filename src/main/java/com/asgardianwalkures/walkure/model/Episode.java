@@ -2,9 +2,7 @@ package com.asgardianwalkures.walkure.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -13,10 +11,18 @@ import java.util.List;
 public class Episode extends CoreModel {
 
     @Id
+    @Column(name = "episodeId")
     private Long id;
-    private Season season;
-    private TVShow tvShow;
+
+    @Column(name = "episodeName")
     private String name;
+
+    @ManyToOne
+    private Season season;
+
+    @ManyToOne
+    private TVShow tvShow;
+
     private List<Crew> crewList;
     private List<Cast> castList;
 

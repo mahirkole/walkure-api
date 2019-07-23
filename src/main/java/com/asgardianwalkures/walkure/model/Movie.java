@@ -2,6 +2,7 @@ package com.asgardianwalkures.walkure.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Burak Köken on 22.7.2019.
@@ -28,6 +29,9 @@ public class Movie {
     @Column(name = "movieReleaseDate")
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
+
+    @ManyToMany
+    private List<Genre> genreList;
 
     public Long getId() {
         return id;
@@ -77,4 +81,11 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    public List<Genre> getGenreList() {
+        return genreList;
+    }
+
+    public void setGenreList(List<Genre> genreList) {
+        this.genreList = genreList;
+    }
 }

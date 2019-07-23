@@ -3,9 +3,7 @@ package com.asgardianwalkures.walkure.model;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -15,19 +13,43 @@ import java.util.List;
 public class TVShow extends CoreModel {
 
     @Id
+    @Column(name = "tvShowId")
     private Long id;
+
+    @Column(name = "tvShowName")
     private String name;
-    private Person creator;
-    private List<Genre> genreList;
-    private List<Network> networkList;
+
+    @Column(name = "tvShowFirstAirDate")
     private Date firstAirDate;
-    private List<Season> seasonList;
-    private List<Episode> episodeList;
+
+    @Column(name = "tvShowCountry")
     private String country;
+
+    @Column(name = "tvShowLanguage")
     private String language;
+
+    @Lob
+    @Column(name = "tvShowOverview")
     private String overview;
+
+    private Person creator;
+
     private Image poster;
-    private List<Company> companyList;
+
     @URL
+    @Column(name = "tvShowHomePageUrl")
     private String homepage;
+
+    @ManyToMany
+    private List<Genre> genreList;
+
+    @OneToMany(mappedBy = "tvShow")
+    private List<Season> seasonList;
+
+    @OneToMany(mappedBy = "tvShow")
+    private List<Episode> episodeList;
+
+    private List<Company> companyList;
+
+    private List<Network> networkList;
 }
