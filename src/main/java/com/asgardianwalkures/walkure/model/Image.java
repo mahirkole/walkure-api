@@ -2,6 +2,7 @@ package com.asgardianwalkures.walkure.model;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,6 +13,10 @@ import javax.persistence.Table;
 public class Image extends CoreModel {
 
     @Id
+    @Column(name = "imageId")
     private Long id;
+
+    @Column(name = "imageUrl")
     private String url;
+
 }

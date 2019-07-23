@@ -11,12 +11,19 @@ import java.util.List;
 public class Episode extends CoreModel {
 
     @Id
+    @Column(name = "episodeId")
     private Long id;
+
+    @Column(name = "episodeName")
+    private String name;
+
+    @ManyToOne
     private Season season;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tvshow_id")
     private TVShow tvShow;
-    private String name;
+
     private List<Crew> crewList;
     private List<Cast> castList;
 
