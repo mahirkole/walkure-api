@@ -17,7 +17,7 @@ public class Genre {
     @Column(name = "genreName")
     private String genre;
 
-    @ManyToMany
-    private List<Movie> movieList;
+    //@ManyToMany
+    //private List<Movie> movieList;
 
 }

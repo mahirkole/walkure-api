@@ -20,10 +20,13 @@ public class Network extends CoreModel {
     @Column(name = "network_name")
     private String name;
 
+    @Column(name = "networkCountry")
     private String county;
 
     @URL
+    @Column(name = "networkHomepageUrl")
     private String homepage;
 
+    @Column(name = "networkHqAddress")
     private String hqAddress;
 }

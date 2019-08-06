@@ -38,7 +38,7 @@ public class Person extends CoreModel {
     private String homepage;
 
     @Convert(converter = ImageIdConverter.class)
-    @Column(name = "personImage")
+    @Column(name = "personImageId")
     private Image image;
 
 }

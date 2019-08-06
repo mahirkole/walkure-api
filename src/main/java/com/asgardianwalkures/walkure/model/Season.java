@@ -13,31 +13,32 @@ import java.util.List;
 public class Season extends CoreModel {
 
     @Id
-    @Column(name = "seasonId")
+    @Column(name = "tvSeasonId")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tvshow_id")
     private TVShow tvShow;
 
-    @Column(name = "seasonName")
+    @Column(name = "tvSeasonName")
     private String name;
 
-    @Column(name = "seasonNo")
+    @Column(name = "tvSeasonNo")
     private Integer seasonNo;
 
     @Convert(converter = ImageIdConverter.class)
-    @Column(name = "seasonPoster")
+    @Column(name = "tvSeasonPosterId")
     private Image poster;
 
-    @Column(name = "seasonTvShowId")
+    @Column(name = "tvSeasonTvShowId")
     private Long tvShowId;
 
-    @Column(name = "seasonOverview")
+    @Lob
+    @Column(name = "tvSeasonOverview")
     private String overview;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "seasonAirDate")
+    @Column(name = "tvSeasonAirDate")
     private Date airDate;
 
     @OneToMany(mappedBy = "season")

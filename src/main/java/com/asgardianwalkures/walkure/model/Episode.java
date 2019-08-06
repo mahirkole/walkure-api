@@ -12,10 +12,10 @@ import java.util.Set;
 public class Episode extends CoreModel {
 
     @Id
-    @Column(name = "episodeId")
+    @Column(name = "tvEpisodeId")
     private Long id;
 
-    @Column(name = "episodeName")
+    @Column(name = "tvEpisodeName")
     private String name;
 
     @ManyToOne

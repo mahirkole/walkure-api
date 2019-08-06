@@ -5,6 +5,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -20,6 +21,7 @@ public abstract class CoreModel {
 
     @LastModifiedDate
     @Column(name = "lastModifiedDate")
+    @Version
     private Date lastModifiedDate;
 
     public UUID getUuid() {
