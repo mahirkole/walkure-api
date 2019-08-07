@@ -1,6 +1,7 @@
 package com.asgardianwalkures.walkure.model;
 
 import com.asgardianwalkures.walkure.ImageIdConverter;
+import com.asgardianwalkures.walkure.enums.Gender;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 

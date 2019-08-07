@@ -25,18 +25,10 @@ public class Episode extends CoreModel {
     @JoinColumn(name = "tvshow_id")
     private TVShow tvShow;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "episode_crew")
-    private Set<Crew> crewList;
+    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EpisodeCrew> crewList;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "episode_cast")
-    private Set<Cast> castList;
+    @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EpisodeCast> castList;
 
 }

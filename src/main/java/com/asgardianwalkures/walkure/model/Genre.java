@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity(name = "Genre")
 @Table(name = "genre")
-public class Genre {
+public class Genre extends CoreModel{
 
     @Id
     @Column(name = "genre_id")

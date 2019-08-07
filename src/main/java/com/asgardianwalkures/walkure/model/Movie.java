@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Burak Köken on 22.7.2019.
@@ -37,4 +38,10 @@ public class Movie extends Title {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_collection_id")
     private MovieCollection movieCollection;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MovieCrew> crewList;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MovieCast> castList;
 }
