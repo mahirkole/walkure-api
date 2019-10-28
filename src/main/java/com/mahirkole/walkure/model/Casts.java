@@ -1,4 +1,4 @@
-package com.asgardianwalkures.walkure.model;
+package com.mahirkole.walkure.model;
 
 import lombok.Data;
 
