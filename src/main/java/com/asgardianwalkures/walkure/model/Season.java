@@ -1,6 +1,6 @@
 package com.asgardianwalkures.walkure.model;
 
-import com.asgardianwalkures.walkure.ImageIdConverter;
+import com.asgardianwalkures.walkure.util.ImageIdConverter;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,36 +12,35 @@ import java.util.List;
 @Table(name = "tv_season")
 public class Season extends CoreModel {
 
-    @Id
-    @Column(name = "tvSeasonId")
-    private Long id;
+  @Id
+  @Column(name = "tvSeasonId")
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tvshow_id")
-    private TVShow tvShow;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "tvshow_id")
+  private TVShow tvShow;
 
-    @Column(name = "tvSeasonName")
-    private String name;
+  @Column(name = "tvSeasonName")
+  private String name;
 
-    @Column(name = "tvSeasonNo")
-    private Integer seasonNo;
+  @Column(name = "tvSeasonNo")
+  private Integer seasonNo;
 
-    @Convert(converter = ImageIdConverter.class)
-    @Column(name = "tvSeasonPosterId")
-    private Image poster;
+  @Convert(converter = ImageIdConverter.class)
+  @Column(name = "tvSeasonPosterId")
+  private Image poster;
 
-    @Column(name = "tvSeasonTvShowId")
-    private Long tvShowId;
+  @Column(name = "tvSeasonTvShowId")
+  private Long tvShowId;
 
-    @Lob
-    @Column(name = "tvSeasonOverview")
-    private String overview;
+  @Lob
+  @Column(name = "tvSeasonOverview")
+  private String overview;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "tvSeasonAirDate")
-    private Date airDate;
+  @Temporal(TemporalType.DATE)
+  @Column(name = "tvSeasonAirDate")
+  private Date airDate;
 
-    @OneToMany(mappedBy = "season")
-    private List<Episode> episodeList;
-
+  @OneToMany(mappedBy = "season")
+  private List<Episode> episodeList;
 }

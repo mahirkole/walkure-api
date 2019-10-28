@@ -3,21 +3,23 @@ package com.asgardianwalkures.walkure.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity(name = "Genre")
 @Table(name = "genre")
-public class Genre extends CoreModel{
+public class Genre extends CoreModel {
 
-    @Id
-    @Column(name = "genre_id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", updatable = false, nullable = false)
+  private Long id;
 
-    @Column(name = "genreName")
-    private String genre;
+  @Column(name = "name", unique = true)
+  private String name;
 
-    //@ManyToMany
-    //private List<Movie> movieList;
+  public Genre() {}
 
+  public Genre(String name) {
+    this.name = name;
+  }
 }

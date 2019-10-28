@@ -1,10 +1,11 @@
 package com.asgardianwalkures.walkure.model;
 
-import com.asgardianwalkures.walkure.ImageIdConverter;
+import com.asgardianwalkures.walkure.util.ImageIdConverter;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,32 +13,46 @@ import java.util.List;
 @Table(name = "company")
 public class Company extends CoreModel {
 
-    @Id
-    @Column(name = "company_id")
-    private Long id;
+  @Id
+  @Column(name = "company_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "companyName")
-    private String name;
+  @Column(name = "companyName")
+  private String name;
 
-    @Column(name = "companyCountry")
-    private String country;
+  @Column(name = "companyCountry")
+  private String country;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_company_id")
-    private Company parentCompany;
-  
-    @OneToMany(mappedBy = "parentCompany", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Company> childCompanyList;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "parent_company_id")
+  private Company parentCompany;
 
-    @Column(name = "companyDescription")
-    private String description;
+  @OneToMany(mappedBy = "parentCompany", orphanRemoval = true)
+  private List<Company> childCompanyList = new ArrayList<>();
 
-    @URL
-    @Column(name = "companyHomePageUrl")
-    private String homepage;
+  @Column(name = "companyDescription")
+  private String description;
 
-    @Convert(converter = ImageIdConverter.class)
-    @Column(name = "companyLogo")
-    private Image logo;
+  @URL
+  @Column(name = "companyHomePageUrl")
+  private String homepage;
 
+  @Convert(converter = ImageIdConverter.class)
+  @Column(name = "companyLogo")
+  private Image logo;
+
+  public Company() {}
+
+  public Company(Long id) {
+    this.id = id;
+  }
+
+  public void addChildCompany(Company company) {
+    this.childCompanyList.add(company);
+  }
+
+  public void removeChildCompany(Company company) {
+    this.childCompanyList.remove(company);
+  }
 }

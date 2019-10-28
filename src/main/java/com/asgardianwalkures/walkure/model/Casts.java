@@ -11,16 +11,16 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "type")
 public class Casts extends CoreModel {
 
-    @Id
-    @Column(name = "casts_id")
-    private Long id;
+  @Id
+  @Column(name = "casts_id")
+  private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Person person;
+  @OneToOne(fetch = FetchType.LAZY)
+  private Person person;
 
-    @Column(name = "castsCharacter")
-    private String character;
+  @Column(name = "castsCharacter")
+  private String character;
 
-    @Column(name = "castsOrder")
-    private Integer order;
+  @Column(name = "castsOrder")
+  private Integer order;
 }

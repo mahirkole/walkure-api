@@ -13,20 +13,20 @@ import javax.persistence.Table;
 @Table(name = "network")
 public class Network extends CoreModel {
 
-    @Id
-    @Column(name = "network_id")
-    private Long id;
+  @Id
+  @Column(name = "network_id")
+  private Long id;
 
-    @Column(name = "network_name")
-    private String name;
+  @Column(name = "network_name")
+  private String name;
 
-    @Column(name = "networkCountry")
-    private String county;
+  @Column(name = "networkCountry")
+  private String county;
 
-    @URL
-    @Column(name = "networkHomepageUrl")
-    private String homepage;
+  @URL
+  @Column(name = "networkHomepageUrl")
+  private String homepage;
 
-    @Column(name = "networkHqAddress")
-    private String hqAddress;
+  @Column(name = "networkHqAddress")
+  private String hqAddress;
 }

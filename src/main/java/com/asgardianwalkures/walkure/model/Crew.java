@@ -11,17 +11,16 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "type")
 public class Crew extends CoreModel {
 
-    @Id
-    @Column(name = "crew_id")
-    private Long id;
+  @Id
+  @Column(name = "crew_id")
+  private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Person person;
+  @OneToOne(fetch = FetchType.LAZY)
+  private Person person;
 
-    @Column(name = "crewDepartment")
-    private String department;
+  @Column(name = "crewDepartment")
+  private String department;
 
-    @Column(name = "crewJob")
-    private Integer job;
-
+  @Column(name = "crewJob")
+  private String job;
 }

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WalkureMovieApplication {
+// @EnableDiscoveryClient
+public class WalkureApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WalkureMovieApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(WalkureApiApplication.class, args);
+  }
 }

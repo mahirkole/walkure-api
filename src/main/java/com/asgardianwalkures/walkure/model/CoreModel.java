@@ -1,9 +1,12 @@
 package com.asgardianwalkures.walkure.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.util.Date;
@@ -11,56 +14,38 @@ import java.util.Objects;
 import java.util.UUID;
 
 @MappedSuperclass
+@Embeddable
+@Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class CoreModel {
 
-    private UUID uuid;
+  private UUID uuid = UUID.randomUUID();
 
-    @CreatedDate
-    @Column(name = "createdDate")
-    private Date createdDate;
+  @CreatedDate
+  @Column(name = "createdAt")
+  private Date createdAt = new Date();
 
-    @LastModifiedDate
-    @Column(name = "lastModifiedDate")
-    @Version
-    private Date lastModifiedDate;
+  @LastModifiedDate
+  @Column(name = "updatedAt")
+  @Version
+  private Date updatedAt;
 
-    public UUID getUuid() {
-        return uuid;
+  @Column(name = "deletedAt", nullable = true)
+  private Date deletedAt = null;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    } else if (!(o instanceof CoreModel)) {
+      return false;
+    } else {
+      return (this.uuid != null) && this.uuid.equals(((CoreModel) o).uuid);
     }
+  }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof CoreModel)) {
-            return false;
-        } else {
-            return (this.uuid != null) && this.uuid.equals(((CoreModel) o).uuid);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.uuid);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.uuid);
+  }
 }

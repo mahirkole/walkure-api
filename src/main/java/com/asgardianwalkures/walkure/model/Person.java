@@ -1,7 +1,6 @@
 package com.asgardianwalkures.walkure.model;
 
-import com.asgardianwalkures.walkure.ImageIdConverter;
-import com.asgardianwalkures.walkure.enums.Gender;
+import com.asgardianwalkures.walkure.util.ImageIdConverter;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -13,33 +12,34 @@ import java.util.Date;
 @Data
 public class Person extends CoreModel {
 
-    @Id
-    @Column(name = "personId")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "person_id", updatable = false, nullable = false)
+  private Long id;
 
-    @Column(name = "personName")
-    private String name;
+  @Column(name = "personName", nullable = false)
+  private String name;
 
-    @Column(name = "personBirthday")
-    private Date birthday;
+  @Column(name = "personBirthday")
+  private Date birthday;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "personGender")
-    private Gender gender;
+  // @Enumerated(EnumType.ORDINAL)
+  @Column(name = "personGender")
+  private String gender;
+  // private Gender gender;
 
-    @Lob
-    @Column(name = "personBio")
-    private String bio;
+  @Lob
+  @Column(name = "personBio")
+  private String bio;
 
-    @Column(name = "personBirthPlace")
-    private String birthPlace;
+  @Column(name = "personBirthPlace")
+  private String birthPlace;
 
-    @URL
-    @Column(name = "personHomePageUrl")
-    private String homepage;
+  @URL
+  @Column(name = "personHomePageUrl")
+  private String homepage;
 
-    @Convert(converter = ImageIdConverter.class)
-    @Column(name = "personImageId")
-    private Image image;
-
+  @Convert(converter = ImageIdConverter.class)
+  @Column(name = "personImageId")
+  private Image image;
 }
