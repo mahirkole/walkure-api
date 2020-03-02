@@ -1,86 +1,78 @@
 package com.mahirkole.walkure.aspect;
 
-import com.mahirkole.walkure.annotation.MapperAspect;
-import com.mahirkole.walkure.exception.CoreException;
-import com.mahirkole.walkure.exception.MapperNotFoundException;
-import com.mahirkole.walkure.mapper.CoreMapper;
-import com.mahirkole.walkure.model.CoreModel;
-import com.mahirkole.walkure.util.MapperService;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
-import java.util.List;
-
+/*
 @Aspect
 @Component
 public class MapperAspectAdvice extends CoreAspect {
 
-  private final MapperService mapperService;
+    private final MapperService mapperService;
 
-  @Autowired
-  public MapperAspectAdvice(MapperService mapperService) {
-    this.mapperService = mapperService;
-  }
-
-  @Around(
-      "execution(* com.asgardianwalkures.walkure.controller.*.*(..)) && beanAnnotatedWithMapperAspect()")
-  public ResponseEntity mapEntityToDto(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-    MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
-    Method method = methodSignature.getMethod();
-    MapperAspect mapperAspect = method.getAnnotation(MapperAspect.class);
-    ResponseEntity responseEntity;
-
-    try {
-      responseEntity = (ResponseEntity) proceedingJoinPoint.proceed();
-    } catch (CoreException ex) {
-      return ex.handle();
+    @Autowired
+    public MapperAspectAdvice(MapperService mapperService) {
+        this.mapperService = mapperService;
     }
 
-    boolean isEntityInstanceOfList = false;
-    String source;
-    String target;
+    @Around(
+            "execution(* com.mahirkole.walkure.controller.*.*(..)) && beanAnnotatedWithMapperAspect()")
+    public ResponseEntity mapEntityToDto(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        MapperAspect mapperAspect = method.getAnnotation(MapperAspect.class);
+        ResponseEntity responseEntity;
 
-    HttpStatus httpStatus = responseEntity.getStatusCode();
+        try {
+            responseEntity = (ResponseEntity) proceedingJoinPoint.proceed();
+        } catch (CoreException ex) {
+            return ex.handle();
+        }
 
-    if (responseEntity.getBody() instanceof CoreModel) {
-      CoreModel entity = (CoreModel) responseEntity.getBody();
-      source = entity.getClass().getSimpleName();
-    } else if (responseEntity.getBody() instanceof List) {
-      List<CoreModel> entities = (List<CoreModel>) responseEntity.getBody();
-      if (entities.size() > 0) {
-        source = entities.get(0).getClass().getSimpleName();
-        isEntityInstanceOfList = true;
-      } else {
-        return responseEntity;
-      }
-    } else {
-      return responseEntity;
+        boolean isEntityInstanceOfList = false;
+        String source;
+        String target;
+
+        HttpStatus httpStatus = responseEntity.getStatusCode();
+
+        if (responseEntity.getBody() instanceof CoreModel) {
+            CoreModel entity = (CoreModel) responseEntity.getBody();
+            source = entity.getClass().getSimpleName();
+        } else if (responseEntity.getBody() instanceof List) {
+            List<CoreModel> entities = (List<CoreModel>) responseEntity.getBody();
+            if (entities.size() > 0) {
+                source = entities.get(0).getClass().getSimpleName();
+                isEntityInstanceOfList = true;
+            } else {
+                // return responseEntity;
+                return new ResponseEntity(
+                        new CoreResponse(responseEntity.getBody()), responseEntity.getStatusCode());
+            }
+        } else {
+            // return responseEntity;
+            return new ResponseEntity(
+                    new CoreResponse(responseEntity.getBody()), responseEntity.getStatusCode());
+        }
+
+        target = source + "Dto";
+
+        if (mapperAspect.source() != void.class && mapperAspect.target() != void.class) {
+            source = mapperAspect.source().getSimpleName();
+            target = mapperAspect.target().getSimpleName();
+        }
+
+        try {
+            CoreMapper mapper = mapperService.getMapper(source, target);
+            if (isEntityInstanceOfList) {
+                return ResponseEntity.status(httpStatus)
+                        .body(new CoreResponse(mapper.toDto((List<CoreModel>) responseEntity.getBody())));
+            } else {
+                CoreModel responseEntityBody = (CoreModel) responseEntity.getBody();
+                return ResponseEntity.status(httpStatus)
+                        .body(new CoreResponse(mapper.toDto(responseEntityBody)));
+            }
+        } catch (MapperNotFoundException ex) {
+            // return responseEntity;
+            return new ResponseEntity(
+                    new CoreResponse(responseEntity.getBody()), responseEntity.getStatusCode());
+        }
     }
-
-    target = source + "Dto";
-
-    if (mapperAspect.source() != void.class && mapperAspect.target() != void.class) {
-      source = mapperAspect.source().getSimpleName();
-      target = mapperAspect.target().getSimpleName();
-    }
-
-    try {
-      CoreMapper mapper = mapperService.getMapper(source, target);
-      if (isEntityInstanceOfList) {
-        return ResponseEntity.status(httpStatus)
-            .body(mapper.toDto((List<CoreModel>) responseEntity.getBody()));
-      } else {
-        return ResponseEntity.status(httpStatus).body(mapper.toDto(responseEntity.getBody()));
-      }
-    } catch (MapperNotFoundException ex) {
-      return responseEntity;
-    }
-  }
 }
+*/

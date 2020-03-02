@@ -1,15 +1,18 @@
 package com.mahirkole.walkure.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-@Entity(name = "EpisodeCast")
-@DiscriminatorValue("episode")
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class EpisodeCast extends Casts {
+@Entity
+@DiscriminatorValue("episode")
+public class EpisodeCast extends CastItem {
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "episode_id")
-  private Episode episode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Episode episode;
 }
+

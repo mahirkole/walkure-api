@@ -19,33 +19,33 @@ import java.util.UUID;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class CoreModel {
 
-  private UUID uuid = UUID.randomUUID();
+    private UUID uuid = UUID.randomUUID();
 
-  @CreatedDate
-  @Column(name = "createdAt")
-  private Date createdAt = new Date();
+    @CreatedDate
+    @Column(name = "createdAt")
+    private Date createdAt = new Date();
 
-  @LastModifiedDate
-  @Column(name = "updatedAt")
-  @Version
-  private Date updatedAt;
+    @LastModifiedDate
+    @Column(name = "updatedAt")
+    @Version
+    private Date updatedAt;
 
-  @Column(name = "deletedAt", nullable = true)
-  private Date deletedAt = null;
+    @Column(name = "deletedAt", nullable = true)
+    private Date deletedAt = null;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    } else if (!(o instanceof CoreModel)) {
-      return false;
-    } else {
-      return (this.uuid != null) && this.uuid.equals(((CoreModel) o).uuid);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof CoreModel)) {
+            return false;
+        } else {
+            return (this.uuid != null) && this.uuid.equals(((CoreModel) o).uuid);
+        }
     }
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.uuid);
-  }
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.uuid);
+    }
 }

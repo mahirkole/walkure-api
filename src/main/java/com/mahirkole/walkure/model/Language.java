@@ -3,20 +3,18 @@ package com.mahirkole.walkure.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Image extends CoreModel {
+public class Language extends CoreModel {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String path;
-
-    @OneToOne
-    @JoinColumn(name = "language_id")
-    private Language language;
+    private String iso_639_1;
 }

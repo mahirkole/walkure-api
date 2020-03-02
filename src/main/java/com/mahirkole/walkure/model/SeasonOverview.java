@@ -8,10 +8,10 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@DiscriminatorValue(value = "movie")
-public class MovieCrew extends CrewItem {
+@DiscriminatorValue(value = "season")
+public class SeasonOverview extends Overview {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
-    private Movie movie;
+    private Season season;
 }

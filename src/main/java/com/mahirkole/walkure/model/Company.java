@@ -1,58 +1,41 @@
 package com.mahirkole.walkure.model;
 
-import com.mahirkole.walkure.util.ImageIdConverter;
 import lombok.Data;
-import org.hibernate.validator.constraints.URL;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity(name = "Company")
-@Table(name = "company")
+@Entity
 public class Company extends CoreModel {
 
-  @Id
-  @Column(name = "company_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  @Column(name = "companyName")
-  private String name;
+    private String name;
 
-  @Column(name = "companyCountry")
-  private String country;
+    @OneToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "parent_company_id")
-  private Company parentCompany;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "parent_id")
+    private Company parent;
 
-  @OneToMany(mappedBy = "parentCompany", orphanRemoval = true)
-  private List<Company> childCompanyList = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    private Set<Company> childList = new HashSet<>();
 
-  @Column(name = "companyDescription")
-  private String description;
+    @Lob
+    private String description;
 
-  @URL
-  @Column(name = "companyHomePageUrl")
-  private String homepage;
+    @OneToMany(mappedBy = "company")
+    private Set<CompanyExternalContact> homepage;
 
-  @Convert(converter = ImageIdConverter.class)
-  @Column(name = "companyLogo")
-  private Image logo;
-
-  public Company() {}
-
-  public Company(Long id) {
-    this.id = id;
-  }
-
-  public void addChildCompany(Company company) {
-    this.childCompanyList.add(company);
-  }
-
-  public void removeChildCompany(Company company) {
-    this.childCompanyList.remove(company);
-  }
+    @OneToOne
+    @JoinColumn(name = "logo_image_id")
+    private Image logo;
 }

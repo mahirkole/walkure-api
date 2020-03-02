@@ -1,15 +1,17 @@
 package com.mahirkole.walkure.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-@Entity(name = "EpisodeCrew")
-@DiscriminatorValue("episode")
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class EpisodeCrew extends Crew {
+@Entity
+@DiscriminatorValue("episode")
+public class EpisodeCrew extends CrewItem {
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "episode_id")
-  private Episode episode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Episode episode;
 }

@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // @EnableDiscoveryClient
 public class WalkureApiApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(WalkureApiApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(WalkureApiApplication.class, args);
+    }
 }

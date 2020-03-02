@@ -1,32 +1,26 @@
 package com.mahirkole.walkure.model;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.URL;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity(name = "Network")
-@Table(name = "network")
+@Entity
 public class Network extends CoreModel {
 
-  @Id
-  @Column(name = "network_id")
-  private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  @Column(name = "network_name")
-  private String name;
+    private String name;
 
-  @Column(name = "networkCountry")
-  private String county;
+    @OneToOne
+    @JoinColumn(name = "country_id")
+    private Country county;
 
-  @URL
-  @Column(name = "networkHomepageUrl")
-  private String homepage;
-
-  @Column(name = "networkHqAddress")
-  private String hqAddress;
+    @OneToMany(mappedBy = "network")
+    private Set<NetworkExternalContact> contacts;
 }
