@@ -1,25 +1,20 @@
 package com.mahirkole.walkure.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity(name = "Genre")
-@Table(name = "genre")
+@Entity
 public class Genre extends CoreModel {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", updatable = false, nullable = false)
-  private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  @Column(name = "name", unique = true)
-  private String name;
-
-  public Genre() {}
-
-  public Genre(String name) {
-    this.name = name;
-  }
+    private String name;
 }

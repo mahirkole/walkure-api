@@ -1,79 +1,94 @@
 package com.mahirkole.walkure.model;
 
-import com.mahirkole.walkure.util.ImageIdConverter;
 import lombok.Data;
-import org.hibernate.validator.constraints.URL;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity(name = "Title")
-@Table(name = "title")
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-// @SQLDelete(sql = "UPDATE title SET deleted_at = CURRENT_TIMESTAMP WHERE title_id = ? and
-// updated_at = ?")
-// @Loader(namedQuery = "findTitleById")
-// @NamedQuery(name = "findTitleById", query = "SELECT t FROM Title t WHERE t.id = ?1 AND
-// t.deletedAt IS NULL")
-// @Where(clause = "deleted_at IS NULL")
 public abstract class Title extends CoreModel {
 
-  @Id
-  @GeneratedValue
-  @Column(name = "title_id", updatable = false, nullable = false)
-  private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  @Column(name = "title_name")
-  private String name;
+    @OneToMany(mappedBy = "title")
+    private Set<TitleName> names;
 
-  @URL
-  @Column(name = "title_homepage")
-  private String homepage;
+    @OneToOne
+    @JoinColumn(name = "original_title_name_id")
+    private TitleName originalTitleName;
 
-  @Convert(converter = ImageIdConverter.class)
-  @Column(name = "title_poster_id")
-  private Image poster;
+    @OneToMany(mappedBy = "title")
+    private Set<TitleOverview> overviews;
 
-  @Lob
-  @Column(name = "title_overview")
-  private String overview;
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "title_genre",
+            joinColumns = @JoinColumn(name = "title_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<Genre> genres = new HashSet<>();
 
-  @Column(name = "title_language")
-  private String language;
+    @OneToMany(mappedBy = "title")
+    private Set<TitleExternalContact> contacts;
 
-  @ManyToMany(
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-      fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "title_genre",
-      joinColumns = @JoinColumn(name = "title_id"),
-      inverseJoinColumns = @JoinColumn(name = "genre_id"))
-  private Set<Genre> genres = new HashSet<>();
+    @OneToOne
+    @JoinColumn(name = "original_language_id")
+    private Language language;
 
-  @ManyToMany(
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-      fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "title_company",
-      joinColumns = @JoinColumn(name = "title_id"),
-      inverseJoinColumns = @JoinColumn(name = "company_id"))
-  private Set<Company> companies = new HashSet<>();
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "title_company",
+            joinColumns = @JoinColumn(name = "title_id"),
+            inverseJoinColumns = @JoinColumn(name = "company_id"))
+    private Set<Company> companies = new HashSet<>();
 
-  public void addCompany(Company company) {
-    this.companies.add(company);
-  }
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "title_language",
+            joinColumns = @JoinColumn(name = "title_id"),
+            inverseJoinColumns = @JoinColumn(name = "language_id"))
+    private Set<Language> languages = new HashSet<>();
 
-  public void removeCompany(Company company) {
-    this.companies.remove(company);
-  }
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "title_country",
+            joinColumns = @JoinColumn(name = "title_id"),
+            inverseJoinColumns = @JoinColumn(name = "country_id"))
+    private Set<Country> countries = new HashSet<>();
 
-  public void addGenre(Genre genre) {
-    this.genres.add(genre);
-  }
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "title_image",
+            joinColumns = @JoinColumn(name = "title_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private Set<Image> images = new HashSet<>();
 
-  public void removeGenre(Genre genre) {
-    this.genres.remove(genre);
-  }
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "title_video",
+            joinColumns = @JoinColumn(name = "title_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id")
+    )
+    private Set<Video> videos = new HashSet<>();
 }

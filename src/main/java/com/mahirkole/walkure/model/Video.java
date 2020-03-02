@@ -8,7 +8,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Image extends CoreModel {
+public class Video extends CoreModel {
 
     @Id
     @GeneratedValue

@@ -1,46 +1,63 @@
 package com.mahirkole.walkure.model;
 
-import com.mahirkole.walkure.util.ImageIdConverter;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity(name = "Season")
-@Table(name = "tv_season")
+@Entity
 public class Season extends CoreModel {
 
-  @Id
-  @Column(name = "tvSeasonId")
-  private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "tvshow_id")
-  private TVShow tvShow;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tv_show_id")
+    private TVShow tvShow;
 
-  @Column(name = "tvSeasonName")
-  private String name;
+    private String name;
 
-  @Column(name = "tvSeasonNo")
-  private Integer seasonNo;
+    private Integer seasonNo;
 
-  @Convert(converter = ImageIdConverter.class)
-  @Column(name = "tvSeasonPosterId")
-  private Image poster;
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "season_image",
+            joinColumns = @JoinColumn(name = "season_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private Set<Image> images;
 
-  @Column(name = "tvSeasonTvShowId")
-  private Long tvShowId;
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "season_video",
+            joinColumns = @JoinColumn(name = "season_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id")
+    )
+    private Set<Video> videos;
 
-  @Lob
-  @Column(name = "tvSeasonOverview")
-  private String overview;
+    @OneToMany(mappedBy = "season")
+    private Set<SeasonOverview> overviews;
 
-  @Temporal(TemporalType.DATE)
-  @Column(name = "tvSeasonAirDate")
-  private Date airDate;
+    @Temporal(TemporalType.DATE)
+    private Date airDate;
 
-  @OneToMany(mappedBy = "season")
-  private List<Episode> episodeList;
+    @OneToMany(mappedBy = "season")
+    private Set<SeasonCast> cast;
+
+    @OneToMany(mappedBy = "season")
+    private Set<SeasonCrew> crew;
+
+    @OneToMany(mappedBy = "season")
+    private Set<Episode> episodes;
 }

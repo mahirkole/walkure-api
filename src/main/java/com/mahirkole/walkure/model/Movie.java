@@ -1,72 +1,34 @@
 package com.mahirkole.walkure.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-/** Created by Burak Köken on 22.7.2019. Refactored by Mahir Köle on 03.08.2019. */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity(name = "Movie")
-@Table(name = "movie")
-// @SQLDelete(sql = "UPDATE title SET deleted_at = CURRENT_TIMESTAMP WHERE title_id = ?")
+@Entity
 public class Movie extends Title {
 
-  @Id
-  @GeneratedValue
-  @Column(name = "movie_id", updatable = false, nullable = false)
-  private Long id;
+    private Boolean isAdult;
+    private Boolean isVideo;
+    private Integer budget;
 
-  @Column(name = "movieRuntime")
-  private Integer runtime;
+    @Temporal(TemporalType.DATE)
+    private Date releaseDate;
 
-  @Column(name = "movieBudget")
-  private Integer budget;
+    private Integer revenue;
+    private Integer runtime;
+    private String tagline;
 
-  @Column(name = "movieImdbId")
-  private String imdbId;
+    @OneToMany(mappedBy = "movie")
+    private Set<MovieCast> cast;
 
-  @Column(name = "movieIsAdult")
-  private Boolean isAdult;
-
-  @Column(name = "movieReleaseDate")
-  @Temporal(TemporalType.DATE)
-  private Date releaseDate;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "movie_collection_id")
-  private MovieCollection movieCollection;
-
-  @OneToMany(mappedBy = "movie", orphanRemoval = true, fetch = FetchType.LAZY)
-  @Getter(AccessLevel.NONE)
-  @Setter(AccessLevel.NONE)
-  private List<MovieCrew> crewList = new ArrayList<>();
-
-  @OneToMany(mappedBy = "movie", orphanRemoval = true, fetch = FetchType.LAZY)
-  @JsonManagedReference
-  @Getter(AccessLevel.NONE)
-  @Setter(AccessLevel.NONE)
-  private List<MovieCast> castList = new ArrayList<>();
-
-  public void addCrewMember(Person person, String department, String job) {
-    MovieCrew member = new MovieCrew();
-    member.setPerson(person);
-    member.setDepartment(department);
-    member.setJob(job);
-    this.crewList.add(member);
-  }
-
-  public void addCastMember(Person person, String character, Integer order) {
-    MovieCast member = new MovieCast();
-    member.setPerson(person);
-    member.setCharacter(character);
-    member.setOrder(order);
-    this.castList.add(member);
-  }
+    @OneToMany(mappedBy = "movie")
+    private Set<MovieCrew> crew;
 }

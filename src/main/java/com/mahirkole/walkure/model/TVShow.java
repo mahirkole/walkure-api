@@ -1,40 +1,37 @@
 package com.mahirkole.walkure.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity(name = "TVShow")
-@Table(name = "tv_show")
+@Entity
 public class TVShow extends Title {
 
-  @Id
-  @GeneratedValue
-  @Column(name = "tvShowId", updatable = false, nullable = false)
-  private Long id;
+    @Temporal(TemporalType.DATE)
+    private Date firstAirDate;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "creator_id")
-  private Person creator;
+    @Temporal(TemporalType.DATE)
+    private Date lastAirDate;
 
-  @Column(name = "tvShowFirstAirDate")
-  private Date firstAirDate;
+    private Boolean isInProduction;
 
-  @Column(name = "tvShowCountry")
-  private String country;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id")
+    private Person creator;
 
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @JoinTable(
-      name = "tv_show_network",
-      joinColumns = @JoinColumn(name = "tv_show_id"),
-      inverseJoinColumns = @JoinColumn(name = "network_id"))
-  private Set<Network> networkList = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "tv_show_network",
+            joinColumns = @JoinColumn(name = "tv_show_id"),
+            inverseJoinColumns = @JoinColumn(name = "network_id"))
+    private Set<Network> networks = new HashSet<>();
 
-  @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Season> seasonList = new ArrayList<>();
-
-  @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Episode> episodeList = new ArrayList<>();
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Season> seasons = new HashSet<>();
 }

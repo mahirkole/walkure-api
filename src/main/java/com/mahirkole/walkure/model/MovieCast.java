@@ -1,17 +1,17 @@
 package com.mahirkole.walkure.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-@Entity(name = "MovieCast")
-@DiscriminatorValue("movie")
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class MovieCast extends Casts {
+@Entity
+@DiscriminatorValue(value = "movie")
+public class MovieCast extends CastItem {
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "movie_id")
-  @JsonBackReference
-  private Movie movie;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Movie movie;
 }

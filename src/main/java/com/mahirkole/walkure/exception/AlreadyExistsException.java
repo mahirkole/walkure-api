@@ -6,13 +6,14 @@ import org.springframework.http.ResponseEntity;
 
 public class AlreadyExistsException extends CoreException {
 
-  public AlreadyExistsException(Class entity, String value) {
-    super(
-        String.format("There is already an %s entity valued as %s", entity.getSimpleName(), value));
-  }
+    public AlreadyExistsException(Class entity, String value) {
+        super(
+                String.format("There is already an %s entity valued as %s", entity.getSimpleName(), value));
+    }
 
-  @Override
-  public ResponseEntity handle() {
-    return ResponseEntity.status(HttpStatus.CONFLICT).body(new CoreResponse(null, super.getMessage()));
-  }
+    @Override
+    public ResponseEntity handle() {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new CoreResponse(null, super.getMessage()));
+    }
 }

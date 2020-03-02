@@ -1,45 +1,46 @@
 package com.mahirkole.walkure.model;
 
-import com.mahirkole.walkure.util.ImageIdConverter;
+import com.mahirkole.walkure.enums.Gender;
 import lombok.Data;
-import org.hibernate.validator.constraints.URL;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
-@Entity(name = "Person")
-@Table(name = "person")
+@EqualsAndHashCode(callSuper = true)
 @Data
+@Entity
 public class Person extends CoreModel {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "person_id", updatable = false, nullable = false)
-  private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  @Column(name = "personName", nullable = false)
-  private String name;
+    private String name;
 
-  @Column(name = "personBirthday")
-  private Date birthday;
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
 
-  // @Enumerated(EnumType.ORDINAL)
-  @Column(name = "personGender")
-  private String gender;
-  // private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-  @Lob
-  @Column(name = "personBio")
-  private String bio;
+    @OneToMany(mappedBy = "person")
+    private Set<PersonOverview> overviews;
 
-  @Column(name = "personBirthPlace")
-  private String birthPlace;
+    private String birthPlace;
 
-  @URL
-  @Column(name = "personHomePageUrl")
-  private String homepage;
+    @OneToMany(mappedBy = "person")
+    private Set<PersonExternalContact> contacts;
 
-  @Convert(converter = ImageIdConverter.class)
-  @Column(name = "personImageId")
-  private Image image;
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "person_image",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private Set<Image> images;
 }

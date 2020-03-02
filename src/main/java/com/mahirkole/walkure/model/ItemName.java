@@ -8,15 +8,16 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Image extends CoreModel {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "itemType", discriminatorType = DiscriminatorType.STRING)
+public class ItemName extends CoreModel {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String path;
-
-    @OneToOne
-    @JoinColumn(name = "language_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Language language;
+
+    private String name;
 }
